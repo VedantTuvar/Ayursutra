@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply h-full bg-slate-50 text-slate-800 font-sans;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display text-slate-900 tracking-tight;
+  }
+}
+
+/* Custom premium scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100/50 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full hover:bg-slate-400 transition-colors;
+}
+
+/* Glassmorphic elements */
+.glass-panel {
+  @apply bg-white/75 backdrop-blur-md border border-white/40 shadow-glass rounded-2xl;
+}
+
+.glass-card {
+  @apply bg-white/90 border border-slate-100 shadow-sm rounded-xl transition-all duration-200 hover:shadow-md;
+}
+
+/* Custom FullCalendar elegant styles */
+.fc {
+  --fc-border-color: #f1f5f9 !important;
+  --fc-today-bg-color: #f0fdf4 !important;
+  --fc-event-border-color: transparent !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.fc-header-toolbar {
+  @apply gap-2 flex-wrap pb-4 !important;
+}
+
+.fc-button-primary {
+  @apply bg-white border border-slate-200 text-slate-700 font-medium hover:bg-slate-50 hover:text-slate-900 focus:ring-2 focus:ring-brand-500/20 active:bg-slate-100 !important;
+  box-shadow: none !important;
+  text-transform: capitalize !important;
+}
+
+.fc-button-active {
+  @apply bg-brand-700 text-white hover:bg-brand-800 hover:text-white !important;
+}
+
+.fc-col-header-cell {
+  @apply bg-slate-50/50 py-3 text-slate-600 font-semibold text-xs uppercase tracking-wider border-b border-slate-200/60 !important;
+}
+
+.fc-timegrid-slot {
+  height: 3.5rem !important;
+}
+
+.fc-event {
+  @apply rounded-lg shadow-sm border-l-4 p-1.5 transition-all duration-150 cursor-pointer hover:scale-[1.01] hover:shadow-md !important;
+}
+
+/* Dot loaders and spinners */
+.spinner-ring {
+  @apply inline-block animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite];
+}

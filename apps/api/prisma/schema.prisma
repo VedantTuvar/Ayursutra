@@ -1,0 +1,367 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  CLINIC_ADMIN
+  DOCTOR
+  THERAPIST
+  RECEPTIONIST
+  PHARMACIST
+  PATIENT
+}
+
+enum SessionStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+  RESCHEDULED
+}
+
+enum PlanStatus {
+  DRAFT
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum InvoiceStatus {
+  DRAFT
+  ISSUED
+  PAID
+  PARTIALLY_PAID
+  CANCELLED
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  UPI
+  BANK_TRANSFER
+  CHEQUE
+}
+
+enum InventoryCategory {
+  OIL
+  GHEE
+  HERB
+  MEDICINE
+  EQUIPMENT
+  CONSUMABLE
+  OTHER
+}
+
+enum TransactionType {
+  STOCK_IN
+  CONSUMED
+  ADJUSTED
+  EXPIRED
+  RETURNED
+}
+
+model Clinic {
+  id               String    @id @default(uuid())
+  name             String
+  slug             String    @unique
+  address          Json?
+  phone            String?
+  email            String?
+  logo             String?
+  gstNumber        String?
+  settings         Json?
+  subscriptionPlan String    @default("starter")
+  isActive         Boolean   @default(true)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  users            User[]
+  patients         Patient[]
+  rooms            Room[]
+  therapyTypes     TherapyType[]
+  inventoryItems   InventoryItem[]
+  invoices         Invoice[]
+  treatmentPlans   TreatmentPlan[]
+  sessions         Session[]
+}
+
+model User {
+  id           String    @id @default(uuid())
+  clinicId     String
+  name         String
+  email        String    @unique
+  phone        String?
+  passwordHash String
+  role         UserRole
+  avatar       String?
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  clinic               Clinic           @relation(fields: [clinicId], references: [id])
+  patient              Patient?
+  doctorPlans          TreatmentPlan[]  @relation("DoctorPlans")
+  therapistSessions    Session[]        @relation("TherapistSessions")
+  sessionNotes         SessionNote[]
+  therapistSkills      TherapistSkill[]
+  recordedTransactions InventoryTransaction[]
+  createdInvoices      Invoice[]
+  recordedPayments     Payment[]
+  refreshTokens        RefreshToken[]
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Patient {
+  id               String    @id @default(uuid())
+  userId           String    @unique
+  clinicId         String
+  dateOfBirth      DateTime?
+  gender           String?
+  bloodGroup       String?
+  prakriti         Json?     // { vata: 40, pitta: 35, kapha: 25, dominance: "VATA" }
+  vikriti          Json?
+  symptoms         String[]
+  medicalHistory   String?
+  allergies        String[]
+  emergencyContact Json?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  user           User            @relation(fields: [userId], references: [id])
+  clinic         Clinic          @relation(fields: [clinicId], references: [id])
+  treatmentPlans TreatmentPlan[]
+  sessions       Session[]
+  invoices       Invoice[]
+}
+
+model TherapyType {
+  id                   String   @id @default(uuid())
+  clinicId             String
+  name                 String
+  nameHindi            String?
+  category             String   // POORVAKARMA | PRADHANKARMA | PASCHATKARMA
+  defaultDurationMins  Int      @default(60)
+  defaultOils          String[]
+  description          String?
+  contraindications    String?
+  requiresTherapistCount Int    @default(1)
+  isActive             Boolean  @default(true)
+  createdAt            DateTime @default(now())
+
+  clinic          Clinic           @relation(fields: [clinicId], references: [id])
+  therapistSkills TherapistSkill[]
+  plannedTherapies PlannedTherapy[]
+}
+
+model Room {
+  id        String   @id @default(uuid())
+  clinicId  String
+  name      String
+  capacity  Int      @default(1)
+  features  String[] // heated_table, steam_chamber, droni, shirodhara_stand
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  clinic   Clinic    @relation(fields: [clinicId], references: [id])
+  sessions Session[]
+}
+
+model TherapistSkill {
+  therapistId      String
+  therapyTypeId    String
+  proficiencyLevel String  @default("INTERMEDIATE") // BEGINNER | INTERMEDIATE | EXPERT
+  certifiedAt      DateTime?
+
+  therapist   User        @relation(fields: [therapistId], references: [id])
+  therapyType TherapyType @relation(fields: [therapyTypeId], references: [id])
+
+  @@id([therapistId, therapyTypeId])
+}
+
+model TreatmentPlan {
+  id               String     @id @default(uuid())
+  clinicId         String
+  patientId        String
+  doctorId         String
+  name             String
+  description      String?
+  startDate        DateTime
+  endDate          DateTime?
+  status           PlanStatus @default(DRAFT)
+  dietInstructions String?
+  lifestyleNotes   String?
+  totalDays        Int        @default(14)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  clinic           Clinic           @relation(fields: [clinicId], references: [id])
+  patient          Patient          @relation(fields: [patientId], references: [id])
+  doctor           User             @relation("DoctorPlans", fields: [doctorId], references: [id])
+  plannedTherapies PlannedTherapy[]
+  sessions         Session[]
+}
+
+model PlannedTherapy {
+  id             String   @id @default(uuid())
+  planId         String
+  therapyTypeId  String
+  dayNumber      Int      // Day 1, 2, 3... of treatment cycle
+  sequenceOrder  Int      @default(1)
+  durationMins   Int
+  prescribedOils Json?    // [{ name: "Mahanarayan", quantityMl: 150 }]
+  notes          String?
+  createdAt      DateTime @default(now())
+
+  plan        TreatmentPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  therapyType TherapyType   @relation(fields: [therapyTypeId], references: [id])
+  sessions    Session[]
+}
+
+model Session {
+  id                 String        @id @default(uuid())
+  clinicId           String
+  patientId          String
+  plannedTherapyId   String?
+  treatmentPlanId    String?
+  therapistId        String?
+  roomId             String?
+  scheduledStart     DateTime
+  scheduledEnd       DateTime
+  actualStart        DateTime?
+  actualEnd          DateTime?
+  status             SessionStatus @default(SCHEDULED)
+  cancellationReason String?
+  notes              String?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  clinic         Clinic          @relation(fields: [clinicId], references: [id])
+  patient        Patient         @relation(fields: [patientId], references: [id])
+  plannedTherapy PlannedTherapy? @relation(fields: [plannedTherapyId], references: [id])
+  treatmentPlan  TreatmentPlan?  @relation(fields: [treatmentPlanId], references: [id])
+  therapist      User?           @relation("TherapistSessions", fields: [therapistId], references: [id])
+  room           Room?           @relation(fields: [roomId], references: [id])
+  sessionNote    SessionNote?
+  lineItems      InvoiceLineItem[]
+  inventoryTxns  InventoryTransaction[]
+}
+
+model SessionNote {
+  id                   String   @id @default(uuid())
+  sessionId            String   @unique
+  recordedById         String
+  oilsUsed             Json?    // [{ name: "Mahanarayan", quantityMl: 120, unit: "ml" }]
+  patientResponse      String?
+  observations         String?
+  followUpInstructions String?
+  vitals               Json?    // { bp: "120/80", pulse: 72, temp: 98.6 }
+  createdAt            DateTime @default(now())
+
+  session    Session @relation(fields: [sessionId], references: [id])
+  recordedBy User    @relation(fields: [recordedById], references: [id])
+}
+
+model InventoryItem {
+  id               String            @id @default(uuid())
+  clinicId         String
+  name             String
+  nameHindi        String?
+  category         InventoryCategory @default(OIL)
+  unit             String            @default("ml") // ml, grams, pieces, litres
+  currentStock     Decimal           @default(0)
+  minimumThreshold Decimal           @default(100)
+  unitCost         Decimal?
+  supplier         String?
+  batchNumber      String?
+  expiryDate       DateTime?
+  isActive         Boolean           @default(true)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  clinic       Clinic                 @relation(fields: [clinicId], references: [id])
+  transactions InventoryTransaction[]
+}
+
+model InventoryTransaction {
+  id           String          @id @default(uuid())
+  itemId       String
+  type         TransactionType
+  quantity     Decimal
+  sessionId    String?
+  notes        String?
+  recordedById String
+  createdAt    DateTime        @default(now())
+
+  item       InventoryItem @relation(fields: [itemId], references: [id])
+  session    Session?      @relation(fields: [sessionId], references: [id])
+  recordedBy User          @relation(fields: [recordedById], references: [id])
+}
+
+model Invoice {
+  id            String        @id @default(uuid())
+  clinicId      String
+  patientId     String
+  invoiceNumber String        @unique
+  issueDate     DateTime      @default(now())
+  dueDate       DateTime?
+  subtotal      Decimal
+  discountAmount Decimal      @default(0)
+  gstRate       Decimal       @default(18)
+  gstAmount     Decimal
+  totalAmount   Decimal
+  status        InvoiceStatus @default(DRAFT)
+  notes         String?
+  createdById   String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  clinic    Clinic           @relation(fields: [clinicId], references: [id])
+  patient   Patient          @relation(fields: [patientId], references: [id])
+  createdBy User             @relation(fields: [createdById], references: [id])
+  lineItems InvoiceLineItem[]
+  payments  Payment[]
+}
+
+model InvoiceLineItem {
+  id          String   @id @default(uuid())
+  invoiceId   String
+  sessionId   String?
+  description String
+  quantity    Int      @default(1)
+  unitPrice   Decimal
+  total       Decimal
+  createdAt   DateTime @default(now())
+
+  invoice Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  session Session? @relation(fields: [sessionId], references: [id])
+}
+
+model Payment {
+  id           String        @id @default(uuid())
+  invoiceId    String
+  amount       Decimal
+  method       PaymentMethod
+  reference    String?       // UPI transaction ID, card last 4, etc.
+  paidAt       DateTime      @default(now())
+  recordedById String
+  notes        String?
+
+  invoice    Invoice @relation(fields: [invoiceId], references: [id])
+  recordedBy User    @relation(fields: [recordedById], references: [id])
+}
