@@ -13,6 +13,7 @@ import { InventoryPage } from './features/inventory/InventoryPage';
 import { BillingPage } from './features/billing/BillingPage';
 import { AnalyticsPage } from './features/analytics/AnalyticsPage';
 import { SettingsPage } from './features/settings/SettingsPage';
+import { HomePage } from './features/home/HomePage';
 import { useAuthStore } from './features/auth/authStore';
 
 export function App() {
@@ -21,13 +22,14 @@ export function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public Landing Home Page */}
+        <Route path="/" element={<HomePage />} />
+
         {/* Public auth screen */}
         <Route path="/login" element={<LoginPage />} />
 
         {/* Protected routes wrapped in Layout shell */}
-        <Route path="/" element={<Layout />}>
-          {/* Main Redirect index */}
-          <Route index element={<Navigate to="/dashboard" replace />} />
+        <Route element={<Layout />}>
           
           {/* Feature dashboards */}
           <Route path="dashboard" element={<DashboardPage />} />
