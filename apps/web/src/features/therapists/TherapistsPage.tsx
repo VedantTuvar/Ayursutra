@@ -44,7 +44,7 @@ export function TherapistsPage() {
                 <div className="min-w-0">
                   <h3 className="text-sm font-bold text-slate-800 truncate">{t.name}</h3>
                   <p className="text-xs text-slate-400 truncate">{t.email}</p>
-                  <p className="text-[10px] text-emerald-700 font-semibold uppercase tracking-wider mt-0.5">
+                  <p className="text-[10px] text-brand-700 font-semibold uppercase tracking-wider mt-0.5">
                     ✓ Roster Active
                   </p>
                 </div>
@@ -65,9 +65,9 @@ export function TherapistsPage() {
                     {t.therapistSkills?.map((skill: any) => (
                       <span
                         key={skill.therapyType?.id}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100 uppercase"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-[10px] font-semibold bg-brand-50 text-brand-700 border border-brand-100 uppercase"
                       >
-                        <Award className="w-3 h-3 text-emerald-600" />
+                        <Award className="w-3 h-3 text-brand-600" />
                         <span>{skill.therapyType?.name} ({skill.proficiencyLevel.toLowerCase()})</span>
                       </span>
                     ))}

@@ -56,7 +56,7 @@ export function LoginPage() {
   return (
     <div className="relative min-h-screen bg-slate-950 flex items-center justify-center p-4 overflow-hidden">
       {/* Background glowing emerald circular blobs */}
-      <div className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-emerald-700/10 rounded-full blur-[100px] animate-pulse pointer-events-none" />
+      <div className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-brand-700/10 rounded-full blur-[100px] animate-pulse pointer-events-none" />
       <div className="absolute bottom-1/4 -right-32 w-[500px] h-[500px] bg-teal-800/10 rounded-full blur-[100px] animate-pulse pointer-events-none" />
 
       {/* Login glass card */}
@@ -64,8 +64,8 @@ export function LoginPage() {
         
         {/* Brand logo header */}
         <div className="text-center mb-8 flex flex-col items-center">
-          <img src="/logo.png" alt="AyurSutra Logo" className="h-28 w-auto object-contain mb-2" />
-          <h2 className="font-display font-bold text-xl bg-gradient-to-r from-emerald-400 to-emerald-200 bg-clip-text text-transparent">
+          <img src="/logo.png" alt="AyurSutra Logo" className="h-12 w-auto object-contain mb-2" />
+          <h2 className="font-display font-bold text-xl bg-gradient-to-r from-brand-400 to-brand-200 bg-clip-text text-transparent">
             Clinical Portal
           </h2>
           <p className="text-xs text-slate-500 mt-1 font-medium">
@@ -84,7 +84,7 @@ export function LoginPage() {
               type="email"
               {...register('email')}
               placeholder="e.g., doctor@demo.com"
-              className="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/60 text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 placeholder-slate-700 font-medium transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/60 text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 placeholder-slate-700 font-medium transition-all"
             />
             {errors.email && (
               <span className="text-xs text-rose-500 font-medium block mt-1">
@@ -103,7 +103,7 @@ export function LoginPage() {
                 type={showPassword ? 'text' : 'password'}
                 {...register('password')}
                 placeholder="••••••••"
-                className="w-full px-4 py-3 pr-10 rounded-xl border border-slate-800 bg-slate-950/60 text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 placeholder-slate-700 font-medium transition-all"
+                className="w-full px-4 py-3 pr-10 rounded-xl border border-slate-800 bg-slate-950/60 text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 placeholder-slate-700 font-medium transition-all"
               />
               <button
                 type="button"
@@ -143,7 +143,7 @@ export function LoginPage() {
             Demo Clinic Logins
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mt-2 text-[10px] text-slate-500 font-medium">
-            <span>Doctor: <strong className="text-emerald-500/80">doctor@demo.com</strong></span>
+            <span>Doctor: <strong className="text-brand-500/80">doctor@demo.com</strong></span>
             <span>Staff: <strong className="text-slate-400">Password123!</strong></span>
           </div>
         </div>

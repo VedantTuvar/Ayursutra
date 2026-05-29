@@ -242,7 +242,7 @@ export function BillingPage() {
                 setPaymentAmount(Number(item.totalAmount) - Number(item.paidAmount));
                 setPaymentOpen(true);
               }}
-              className="flex items-center gap-1 text-xs font-bold text-emerald-700 hover:text-emerald-800"
+              className="flex items-center gap-1 text-xs font-bold text-brand-700 hover:text-brand-800"
             >
               <CreditCard className="w-3.5 h-3.5" />
               <span>Collect</span>
@@ -561,7 +561,7 @@ export function BillingPage() {
                         setPaymentAmount(Number(selectedInvoice.totalAmount) - Number(selectedInvoice.paidAmount));
                         setPaymentOpen(true);
                       }}
-                      className="px-4 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-sm transition-all"
+                      className="px-4 py-2 text-xs font-bold text-white bg-brand-700 hover:bg-brand-600 rounded-xl shadow-sm transition-all"
                     >
                       Record Payment Receipt
                     </button>
@@ -667,7 +667,7 @@ export function BillingPage() {
                 <button
                   type="submit"
                   disabled={recordPaymentMutation.isPending}
-                  className="px-5 py-2 text-sm font-semibold text-white bg-emerald-700 hover:bg-emerald-600 rounded-xl shadow-md transition-all disabled:opacity-50"
+                  className="px-5 py-2 text-sm font-semibold text-white bg-brand-700 hover:bg-brand-600 rounded-xl shadow-md transition-all disabled:opacity-50"
                 >
                   {recordPaymentMutation.isPending ? 'Saving...' : 'Record Payment'}
                 </button>

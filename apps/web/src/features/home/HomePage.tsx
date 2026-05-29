@@ -72,21 +72,21 @@ export function HomePage() {
       <div className="absolute bottom-20 -right-48 w-[600px] h-[600px] bg-teal-800/10 rounded-full blur-[120px] pointer-events-none animate-pulse" />
 
       {/* Header Navigation */}
-      <header className="relative sticky top-0 z-30 w-full bg-slate-950/80 backdrop-blur-md border-b border-slate-900/60 h-16 flex items-center justify-between px-6 md:px-12">
+      <header className="relative sticky top-0 z-30 w-full bg-slate-950/80 backdrop-blur-md border-b border-slate-900/60 h-20 flex items-center justify-between px-6 md:px-12">
         <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="AyurSutra Logo" className="h-15 w-auto object-contain" />
+          <img src="/logo.png" alt="AyurSutra Logo" className="h-14 w-auto object-contain" />
         </div>
 
         <div className="flex items-center gap-6">
-          <a href="#features" className="hidden sm:inline text-xs font-semibold text-slate-400 hover:text-slate-200 transition-colors">
-            Features
+          <a href="#about" className="hidden sm:inline text-xs font-semibold text-slate-400 hover:text-slate-200 transition-colors">
+            About
           </a>
-          <a href="#architecture" className="hidden sm:inline text-xs font-semibold text-slate-400 hover:text-slate-200 transition-colors">
-            Architecture
+          <a href="#contact" className="hidden sm:inline text-xs font-semibold text-slate-400 hover:text-slate-200 transition-colors">
+            Contact
           </a>
           <Link
             to={isAuthenticated ? '/dashboard' : '/login'}
-            className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-emerald-300 hover:from-emerald-300 hover:to-emerald-200 rounded-xl transition-all shadow-lg shadow-emerald-950/20 active:scale-[0.98]"
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-slate-950 bg-gradient-to-r from-brand-400 to-brand-300 hover:from-brand-300 hover:to-brand-200 rounded-xl transition-all shadow-lg shadow-brand-950/20 active:scale-[0.98]"
           >
             <span>{isAuthenticated ? 'Go to Workstation' : 'Launch Workstation'}</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -95,15 +95,15 @@ export function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative px-6 py-20 md:py-32 max-w-5xl mx-auto text-center space-y-8 z-10 flex flex-col items-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[10px] text-emerald-400 font-bold uppercase tracking-wider shadow-inner">
-          <Sparkles className="w-3 h-3 text-emerald-400" />
+      <section className="relative px-6 pt-8 pb-20 md:pt-12 md:pb-28 max-w-5xl mx-auto text-center space-y-8 z-10 flex flex-col items-center">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[10px] text-brand-400 font-bold uppercase tracking-wider shadow-inner">
+          <Sparkles className="w-3 h-3 text-brand-400" />
           <span>Complete Panchakarma Clinic SaaS Platform</span>
         </div>
 
         <h1 className="text-4xl md:text-6xl font-display font-extrabold tracking-tight leading-none text-white max-w-4xl">
           The Premium Panchakarma Workstation for{' '}
-          <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-200 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-brand-400 via-brand-300 to-brand-200 bg-clip-text text-transparent">
             Modern Ayurvedic Clinics
           </span>
         </h1>
@@ -121,7 +121,7 @@ export function HomePage() {
             <ArrowRight className="w-4 h-4" />
           </Link>
           <a
-            href="#features"
+            href="#about"
             className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-850 text-slate-350 border border-slate-800 font-bold text-sm transition-all"
           >
             <span>Explore Platform Features</span>
@@ -145,17 +145,17 @@ export function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div className="bg-slate-950/60 border border-slate-900 p-5 rounded-2xl space-y-2">
               <span className="text-[10px] text-slate-500 uppercase font-bold tracking-widest block">Active Therapist Skill-rosters</span>
-              <p className="text-2xl font-bold font-display text-emerald-400 leading-tight">100% Certified</p>
+              <p className="text-2xl font-bold font-display text-brand-400 leading-tight">100% Certified</p>
               <span className="text-[10px] text-slate-450 font-medium block">Snehana, Swedana, Shirodhara, Basti</span>
             </div>
             <div className="bg-slate-950/60 border border-slate-900 p-5 rounded-2xl space-y-2">
               <span className="text-[10px] text-slate-500 uppercase font-bold tracking-widest block">Intelligent Scheduling</span>
-              <p className="text-2xl font-bold font-display text-emerald-400 leading-tight">Conflict-Free Locks</p>
+              <p className="text-2xl font-bold font-display text-brand-400 leading-tight">Conflict-Free Locks</p>
               <span className="text-[10px] text-slate-450 font-medium block">Patients + Rooms + Therapist simultaneous check</span>
             </div>
             <div className="bg-slate-950/60 border border-slate-900 p-5 rounded-2xl space-y-2">
               <span className="text-[10px] text-slate-500 uppercase font-bold tracking-widest block">Automated Billing</span>
-              <p className="text-2xl font-bold font-display text-emerald-400 leading-tight">18% GST Calculations</p>
+              <p className="text-2xl font-bold font-display text-brand-400 leading-tight">18% GST Calculations</p>
               <span className="text-[10px] text-slate-450 font-medium block">Automated invoicing on completed sessions</span>
             </div>
           </div>
@@ -163,7 +163,7 @@ export function HomePage() {
       </section>
 
       {/* Feature Section */}
-      <section id="features" className="relative bg-slate-950/40 border-y border-slate-900 py-20 px-6 z-10">
+      <section id="about" className="relative bg-slate-950/40 border-y border-slate-900 py-20 px-6 z-10">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <h2 className="text-2xl md:text-3xl font-display font-extrabold text-white">
@@ -180,9 +180,9 @@ export function HomePage() {
               return (
                 <div
                   key={idx}
-                  className="bg-slate-900/30 border border-slate-850 hover:border-slate-800 p-6 rounded-2xl space-y-4 hover:shadow-xl hover:shadow-emerald-950/5 transition-all"
+                  className="bg-slate-900/30 border border-slate-850 hover:border-slate-800 p-6 rounded-2xl space-y-4 hover:shadow-xl hover:shadow-brand-950/5 transition-all"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-emerald-950/60 text-emerald-400 flex items-center justify-center border border-emerald-900/40">
+                  <div className="w-10 h-10 rounded-xl bg-brand-950/60 text-brand-400 flex items-center justify-center border border-brand-900/40">
                     <Icon className="w-5 h-5" />
                   </div>
                   <h3 className="font-display font-bold text-sm text-slate-105">{feat.title}</h3>
@@ -195,7 +195,7 @@ export function HomePage() {
       </section>
 
       {/* Monorepo Architecture Tech stack */}
-      <section id="architecture" className="relative py-20 px-6 z-10 max-w-6xl mx-auto space-y-12">
+      <section id="contact" className="relative py-20 px-6 z-10 max-w-6xl mx-auto space-y-12">
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <h2 className="text-2xl md:text-3xl font-display font-extrabold text-white">
             Scaffolded on a Modern Full-Stack Architecture
