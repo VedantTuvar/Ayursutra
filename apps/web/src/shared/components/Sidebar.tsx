@@ -84,12 +84,9 @@ export function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
       }`}
     >
       {/* Brand logo header */}
-      <div className="h-16 flex items-center gap-3 px-6 bg-slate-950/40 border-b border-slate-800/60">
-        <span className="text-xl">🌿</span>
-        <h1 className="font-display font-bold text-lg bg-gradient-to-r from-emerald-400 to-emerald-200 bg-clip-text text-transparent">
-          AyurSutra
-        </h1>
-        <span className="text-xs px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 font-semibold border border-emerald-800/40">
+      <div className="h-16 flex items-center gap-3 px-5 bg-slate-950/40 border-b border-slate-800/60">
+        <img src="/logo.png" alt="AyurSutra Logo" className="h-11 w-auto object-contain" />
+        <span className="text-xs px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 font-semibold border border-emerald-800/40 ml-auto">
           SaaS
         </span>
       </div>

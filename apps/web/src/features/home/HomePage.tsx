@@ -74,13 +74,7 @@ export function HomePage() {
       {/* Header Navigation */}
       <header className="relative sticky top-0 z-30 w-full bg-slate-950/80 backdrop-blur-md border-b border-slate-900/60 h-16 flex items-center justify-between px-6 md:px-12">
         <div className="flex items-center gap-3">
-          <span className="text-2xl">🌿</span>
-          <span className="font-display font-extrabold text-xl bg-gradient-to-r from-emerald-400 to-emerald-200 bg-clip-text text-transparent">
-            AyurSutra
-          </span>
-          <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 font-semibold border border-emerald-800/40">
-            SaaS Workstation
-          </span>
+          <img src="/logo.png" alt="AyurSutra Logo" className="h-15 w-auto object-contain" />
         </div>
 
         <div className="flex items-center gap-6">
